@@ -7462,10 +7462,15 @@ public class PackageManagerService extends IPackageManager.Stub {
             // this specific package to bind to.
             OverlayManagerService overlayManagerService = new OverlayManagerService(mContext, mInstaller);
             final int[] currentUserIds = UserManagerService.getInstance().getUserIds();
-            String[] assetPaths = new String[overlayManagerService
-                .getAllEnabledOverlays(pkg.packageName, 0)]; // temporary, till we wake up with a fresh mind
-            if (assetPaths != null && assetPaths.length != 0) {
-                pkg.applicationInfo.resourceDirs = assetPaths;
+            int length_of_users = currentUserIds.length;
+            int index = 0;
+            while (index < length_of_users) {
+                String[] assetPaths = new String[overlayManagerService
+                    .getAllEnabledOverlays(pkg.packageName, currentUserIds[index])];
+                if (assetPaths != null && assetPaths.length != 0) {
+                    pkg.applicationInfo.resourceDirs = assetPaths;
+                }
+                index += 1;
             }
         }
         return pkg;
