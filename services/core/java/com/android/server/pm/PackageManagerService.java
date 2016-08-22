@@ -7461,6 +7461,7 @@ public class PackageManagerService extends IPackageManager.Stub {
             // Load up all the assetPaths from OverlayManagerService using getAllEnabledOverlays for
             // this specific package to bind to.
             OverlayManagerService overlayManagerService = new OverlayManagerService(mContext, mInstaller);
+            final int[] currentUserIds = UserManagerService.getInstance().getUserIds();
             String[] assetPaths = new String[overlayManagerService
                 .getAllEnabledOverlays(pkg.packageName, 0)]; // temporary, till we wake up with a fresh mind
             if (assetPaths != null && assetPaths.length != 0) {
